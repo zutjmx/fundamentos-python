@@ -5,7 +5,7 @@ from astrapy.constants import VectorMetric
 # Initialize the client and get a "Database" object
 client = DataAPIClient(os.environ["ASTRA_DB_APPLICATION_TOKEN"])
 database = client.get_database(os.environ["ASTRA_DB_API_ENDPOINT"])
-print(f"* Database: {database.info().name}\n")
+print(f"* Base de Datos: {database.info().name}\n")
 
 # Create a collection. The default similarity metric is cosine.
 # Choose dimensions that match your vector data.
@@ -16,7 +16,7 @@ collection = database.create_collection(
     metric=VectorMetric.COSINE,  # Or just 'cosine'.
     check_exists=False, # Optional.
 )
-print(f"* Collection: {collection.full_name}\n")
+print(f"* Colección: {collection.full_name}\n")
 
 # Insert documents with embeddings into the collection.
 documents = [
@@ -34,7 +34,7 @@ documents = [
     },
 ]
 insertion_result = collection.insert_many(documents)
-print(f"* Inserted {len(insertion_result.inserted_ids)} items.\n")
+print(f"* {len(insertion_result.inserted_ids)} registros insertados.\n")
 
 # Perform a similarity search.
 query_vector = [0.15, 0.1, 0.1, 0.35, 0.55]
@@ -43,7 +43,7 @@ results = collection.find(
     limit=10,
     include_similarity=True,
 )
-print("Vector search results:")
+print("Resultados de la búsqueda por vector:")
 for document in results:
     print("    ", document)
     
